@@ -15,7 +15,9 @@ body <- dashboardBody(
                 fluidRow(
                     box(title = 'Selecione suas opções', width=12, solidHeader = TRUE, status='warning',
                         selectInput('stock', 'Ação', stock_list, multiple=FALSE),
-                        uiOutput("timedate"),
+                        selectInput('stock_comp', 'Ano Inicial', time_list, multiple=FALSE),
+                        selectInput('stock_comp', 'Ano Final', time_list, multiple=FALSE),
+                        #uiOutput("timedate"),
                         actionButton('go', 'Submeter')
                         )
                 ),
@@ -34,7 +36,9 @@ body <- dashboardBody(
                 fluidRow(
                     box(title = 'Selecione suas opções', width=12, solidHeader = TRUE, status='warning',
                         selectInput('stock_comp', 'Ação', stock_list, multiple=TRUE),
-                        uiOutput("timedate_comp"),
+                        selectInput('stock_comp', 'Ano Inicial', time_list, multiple=FALSE),
+                        selectInput('stock_comp', 'Ano Final', time_list, multiple=FALSE),
+                        #uiOutput("timedate_comp"),
                         actionButton('go_comp', 'Submeter')
                     )
                 ),            
@@ -43,5 +47,5 @@ body <- dashboardBody(
 )
 
 ui <- dashboardPage(
-    skin = 'blue',
+    skin = 'red',
     header, sidebar, body)
