@@ -10,13 +10,36 @@ server <- function(input, output) {
         df_stock <- master_df %>% 
             filter(Estado == stock_name)
         
-        ## FALTA -> FILTRAR O DF POR DATA!!
+        #Recebendo os dados da tela
         ano_inicial <- input$stock_ano_inicial
-        ano_final <- input$stock_ano_inicial
+        ano_final <- input$stock_ano_final
+        #Convertendon para inteiro
+        ano_inicial <- as.numeric(ano_inicial)
+        ano_final <- as.numeric(ano_final)
         
+        ano_atual <- ano_inicial + 1
+        
+        z <- df_stock %>% 
+          filter(Ano == ano_inicial)
+        
+        #Função que filtra os dados
+        while(ano_atual <= ano_final){
+          y <- df_stock %>% 
+            filter(Ano == ano_atual)
+          
+          z <- bind_rows(z, y)
+          ano_atual <- ano_atual + 1
+        }
+    
+   
+        
+        master_df <- read.csv('amazon.csv', stringsAsFactors = T) %>%
+          group_by(Ano, Estado) %>%
+          summarise(Numero = sum(Numero, na.rm = T)) %>%
+          ungroup()
 
- 
-        return(df_stock)
+        print(z)
+        return(z)
     })
     
     
