@@ -22,6 +22,12 @@ server <- function(input, output) {
         ano_inicial <- as.numeric(ano_inicial)
         ano_final <- as.numeric(ano_final)
         
+        if(ano_final < ano_inicial){
+          temp <- ano_final
+          ano_final <- ano_inicial
+          ano_inicial <- temp
+        }
+        
         ano_atual <- ano_inicial + 1
         
         #z <- df_stock %>% 
@@ -54,6 +60,12 @@ server <- function(input, output) {
       #Convertendon para inteiro
       ano_inicial <- as.numeric(ano_inicial)
       ano_final <- as.numeric(ano_final)
+      
+      if(ano_final < ano_inicial){
+        temp <- ano_final
+        ano_final <- ano_inicial
+        ano_inicial <- temp
+      }
       
       master_df <- read.csv('amazon_correct.csv', stringsAsFactors = T)
       
@@ -149,6 +161,12 @@ server <- function(input, output) {
       ano_inicial <- as.numeric(ano_inicial)
       ano_final <- as.numeric(ano_final)
       
+      if(ano_final < ano_inicial){
+        temp <- ano_final
+        ano_final <- ano_inicial
+        ano_inicial <- temp
+      }
+      
       master1_df <- read.csv('amazon_correct.csv', stringsAsFactors = T) %>%
         group_by(Ano, Estado) %>%
         summarise(Queimadas = sum(Queimadas, na.rm = T)) %>%
@@ -173,6 +191,12 @@ server <- function(input, output) {
       #Convertendon para inteiro
       ano_inicial <- as.numeric(ano_inicial)
       ano_final <- as.numeric(ano_final)
+      
+      if(ano_final < ano_inicial){
+        temp <- ano_final
+        ano_final <- ano_inicial
+        ano_inicial <- temp
+      }
       
       master1_df <- read.csv('amazon_correct.csv', stringsAsFactors = T) %>%
         group_by(Ano, Estado) %>%
