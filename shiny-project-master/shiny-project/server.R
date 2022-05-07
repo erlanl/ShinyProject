@@ -117,7 +117,7 @@ server <- function(input, output) {
       num_max <- max(num)
       
       ggplot(df, aes(x = Queimadas)) +
-        geom_histogram(group = 1, binwidth = 100, color = "black", bins = 10000) + geom_bar(start = "count") + scale_x_continuous(limits = c(num_min, num_max), breaks = seq(0,num_max,500)) +
+        geom_histogram(group = 1, binwidth = 100, color = "black", bins = 10000) + geom_bar(start = "count") + scale_x_continuous(limits = c(num_min, num_max), breaks = seq(0,num_max,100)) +
         theme(axis.text = element_text(angle = 90, vjust = 0))
       
     })
@@ -125,16 +125,9 @@ server <- function(input, output) {
     output$sh <- renderPlot({
       df <- select_stock()
       
-      ano_limite <- df$Ano %>% na.omit() %>% as.numeric()
-      ano_limite_min <- min(ano_limite)
-      ano_limite_max <- max(ano_limite)
+      ggplot(df, aes(x= as.factor(Ano), y=as.factor(Queimadas), group = Estado, color = Estado)) +
+        geom_line(size = 2) + xlab("Ano") + ylab("Queimadas")
       
-      num <- df$Queimadas %>% na.omit() %>% as.numeric()
-      num_min <- min(num)
-      num_max <- max(num)
-      
-      ggplot(df, aes(x= Ano, y=Queimadas)) +
-        geom_line(color = "red", size = 2)
     })
     
     output$box <- renderPlot({
@@ -212,11 +205,11 @@ server <- function(input, output) {
       df <- mapa1()
       df2 <- mapa2()
 
-      Correlacao <- cor(df$Queimadas, df2$Queimadas)
-      Correlacao <- data.frame(Correlacao)
-      Correlacao <- as.data.frame(t(Correlacao))
+      Correlação <- cor(df$Queimadas, df2$Queimadas)
+      Correlação <- data.frame(Correlação)
+      Correlação <- as.data.frame(t(Correlação))
       
-      return(Correlacao)
+      return(Correlação)
     })
     
     output$info2 <- renderDT({
@@ -232,22 +225,22 @@ server <- function(input, output) {
     output$grafo <- renderPlot({
       df <- select_2_stocks()
       
-      ggplot(df, aes(x= Ano, y=Queimadas, group = Estado, color = Estado)) +
-        geom_line(size = 2)
+      ggplot(df, aes(x= as.factor(Ano), y=as.factor(Queimadas), group = Estado, color = Estado)) +
+        geom_line(size = 2) + xlab("Ano") + ylab("Queimadas")
       
     })
     
     output$barra <- renderPlot({
       df <- select_2_stocks()
       
-      ggplot(df, aes(fill = Estado, y = Queimadas / 12, x = Ano)) +
-        geom_bar(position = "dodge", stat="identity")
+      ggplot(df, aes(fill = Estado, y = as.factor(round(Queimadas / 12)), x = as.factor(Ano))) +
+        geom_bar(position = "dodge", stat="identity") + ylab("Média de Queimadas") + xlab("Ano")
     })
     
     output$scat <- renderPlot({
       df <- select_2_stocks()
       
-      ggplot(df, aes(x = Ano, y = Queimadas, color = Estado)) +
-        geom_point(size = 6)
+      ggplot(df, aes(x = as.factor(Ano), y = as.factor(Queimadas), color = Estado)) + 
+        geom_point(size = 6) + xlab("Ano") + ylab("Queimadas")
     })
 }
