@@ -43,7 +43,14 @@ body <- dashboardBody(
                         selectInput('stock_comp_ano_final', 'Ano Final', time_list, multiple=FALSE),
                         actionButton('go_comp', 'Submeter')
                     )
-                ),            
+                ),
+                
+                fluidRow(
+                  box(title = "Informações sobre os estados", width = 12, solidHeader = TRUE, status = "primary",
+                      DTOutput('info2')
+                      
+                  )
+                ),
                 
                 fluidRow(
                   box(title = "Queimadas ao longo dos anos", width = 12, solidHeader = TRUE, status = "primary",
